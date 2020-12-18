@@ -925,11 +925,13 @@ impl d::Device<B> for Device {
                 if let Some(location) = gl.get_uniform_location(program, &name) {
                     // Sampler2D won't show up in UniformLocation and the only other uniforms
                     // should be push constants
-                    uniforms.push(n::UniformDesc {
-                        location: Starc::new(location),
-                        offset,
-                        utype,
-                    });
+                    if utype != glow::SAMPLER_2D {
+                        uniforms.push(n::UniformDesc {
+                            location: Starc::new(location),
+                            offset,
+                            utype,
+                        });
+                    }
 
                     offset += size as u32;
                 }
